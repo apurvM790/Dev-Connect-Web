@@ -6,6 +6,10 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 
 import Body from "./components/Body";
+import Profile from "./components/profile";
+import Connections from "./components/Connections";
+import Requests from "./components/Requests";
+
 
 
 function App() {
@@ -16,8 +20,11 @@ function App() {
       <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Body />}>
+            <Route path="/" element={<Feed />}></Route>
             <Route path="/login" element={<Login />}></Route>
-            <Route path="/feed" element={<Feed />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/connections" element={<Connections />}></Route>
+            <Route path="/requests" element={<Requests />}></Route>
             </Route>
           </Routes>
       </BrowserRouter>

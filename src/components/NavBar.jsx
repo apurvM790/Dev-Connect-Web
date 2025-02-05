@@ -1,7 +1,29 @@
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../utils/constants";
+import { removeUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { removeFeed } from "../utils/feedSlice";
+import { Link } from 'react-router';
 
 function NavBar(){
   const user = useSelector((store)=> store.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+    const handleLogOut = async ()=>{
+      try {
+          await axios.post(BASE_URL+"/logout",{},{withCredentials: true});
+
+        dispatch(removeUser());
+        dispatch(removeFeed());
+        navigate("/login");
+        
+      } catch (error) {
+          console.log(error);
+      }
+    }
 
     return <>
     <div className="navbar bg-base-300 px-6">
@@ -24,16 +46,20 @@ function NavBar(){
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
         <li>
-          <a className="justify-between">
+          <Link to="/profile" className="justify-between">
             Profile
-            <span className="badge">New</span>
-          </a>
+          </Link>
+        </li>
+        <li>
+          <Link to="/connections" className="justify-between">
+            Connections
+          </Link>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><a onClick={handleLogOut}>Logout</a></li>
       </ul>
     </div>
-    <button className="btn btn-ghost btn-circle">
+    <Link to="/requests" className="btn btn-ghost btn-circle" >
       <div className="indicator">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +75,7 @@ function NavBar(){
         </svg>
         <span className="badge badge-xs badge-primary indicator-item"></span>
       </div>
-    </button>
+    </Link>
   </div>}
         </div>
     </>
