@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../utils/userSlice";
 import Cards from "./Cards";
+import Matches from "./Matches";
 
 function Feed (){
     const feed = useSelector(store => store.feed);
@@ -30,9 +31,14 @@ function Feed (){
     },[])
 
     return <>
-        {feed && <div className="flex justify-center my-20">
+        {feed && (<div className="flex flex-wrap gap-0 w-full h-screen">
+            <div className="bg-gray-900 border-r-4 border-sky-900 shadow-xl shadow-sky-800 flex w-3/12">
+                <Matches />
+            </div>
+            <div className="flex justify-center my-20 w-9/12">
             <Cards user={feed[0]}/>
-        </div>}
+        </div>
+        </div>)}
         </>
 }
 

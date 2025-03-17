@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import ConnectionsCard from "./ConnectionsCard";
+import NoConnections from "./NoConnections";
 
 function Connections(){
 
@@ -22,11 +23,14 @@ function Connections(){
         fetchConnections();
     },[])
 
-    console.log(connections);
+    // console.log(connections);
 
-    return <div className="flex flex-col justify-center items-center my-4 gap-4">
-        {connections && <ConnectionsCard connection={connections[0]}/>}
-    </div>
+    return <> 
+    {connections.length!=0 ?
+        (<div className="flex flex-col justify-center items-center my-4 gap-4">
+        {(connections.map(((connection)=><ConnectionsCard connection={connection} key={connection._id}/>)))}
+    </div>) : <NoConnections />
+}</>
 }
 
 export default Connections;

@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { CircleX } from 'lucide-react';
 
 function EditProfile({ user }){
     const [firstName, setFirstName] = useState(user.data.firstName);
@@ -15,6 +16,9 @@ function EditProfile({ user }){
     const [about, setAbout] = useState(user.data.about);
     const [email, setEmail] = useState(user.data.email);
     const [error, setError] = useState(null);
+
+    const [skills, setSkills] = useState(user.data.skills || []);
+    const [skillInput, setSkillInput] = useState("");
 
     // console.log(user); 
 
@@ -28,7 +32,8 @@ function EditProfile({ user }){
                 age,
                 gender,
                 about,
-                photoUrl
+                photoUrl,
+                skills
             },{withCredentials: true});
 
             dispatch(addUser(user?.data));
@@ -42,15 +47,25 @@ function EditProfile({ user }){
         }
 
     }
-    const notify = () => toast('Here is your toast.');
+
+    const handleAddSkill = (e)=>{
+        if(e.key=="Enter" && skillInput.trim()!="" && skills.length<10){
+            e.preventDefault();
+            setSkills([...skills, skillInput.trim()]);
+            setSkillInput("");
+        }
+    }
+
+    const handleRemoveSkill = (index)=>{
+        setSkills(skills.filter((_,i)=> i!=index));
+    }
 
     return <>
         <div className="">
             <Toaster position="top-center" reverseOrder={false}/>
         </div>
-        <div className="flex flex-col my-16 items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div className="w-full grid grid-cols-1  my-16 px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <div className="w-full p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-pretty">
                   Your Profile
               </h1>
@@ -100,12 +115,26 @@ function EditProfile({ user }){
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About</label>
                 <textarea id="message" value={about} onChange={(e)=>{setAbout(e.target.value)}} rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
                 </div>
+
+                <div className="">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Skills</label>
+                    <input value={skillInput} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e)=> setSkillInput(e.target.value)} disabled={skills.length>=10} onKeyDown={handleAddSkill} placeholder="type skill here..." />
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {skills.map((skill,index)=>(
+                            <div key={index} className="bg-blue-500 text-white px-3 py-1 m-1 rounded-lg flex items-center">
+                                {skill}
+                                <button className="ml-2 text-white font-bold text-lg focus:outline-none" onClick={()=> handleRemoveSkill(index)}><CircleX /></button>
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
                   
                   <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onClick={handleEditProfile}>Edit Profile</button>
                   
               </form>
           </div>
-      </div>
         </div>
     
   </>

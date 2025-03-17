@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests } from "../utils/requestSlice";
 import toast, { Toaster } from "react-hot-toast";
+import NoRequests from "./NoRequests";
 
 function Requests(){
 
@@ -36,12 +37,14 @@ function Requests(){
       },[requests]);
       
     return <> 
+    { data && data.length!=0 ?(<div>
     <div>
         <Toaster position="top-center" reverseOrder={false}/>
     </div>
     <div className="flex flex-col justify-center items-center my-4 gap-4">
         {data && data.map((curr)=><RequestCard request={curr} key={curr._id} onRemove={removeFromList}/>)}
     </div>
+    </div>) : <NoRequests />}
         </>
 }
 
