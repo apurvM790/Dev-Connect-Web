@@ -13,7 +13,7 @@ function Feed (){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const getFeed = async ()=>{
+    const getFeed = async ()=>{   
         try {
             if(feed) return;
             const res = await axios.get(BASE_URL+"/feed",{withCredentials:true});
