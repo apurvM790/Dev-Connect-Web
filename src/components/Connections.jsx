@@ -11,7 +11,6 @@ function Connections(){
     const fetchConnections = async ()=>{
         try {
             const res = await axios.get(BASE_URL+"/user/connections",{withCredentials:true});
-            // console.log(res);
             setConnections(res?.data?.data);
             
         } catch (error) {
@@ -23,7 +22,6 @@ function Connections(){
         fetchConnections();
     },[])
 
-    // console.log(connections);
 
     return <> 
     {connections.length!=0 ?

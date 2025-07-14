@@ -23,7 +23,7 @@ function Login(){
             },{withCredentials: true});
 
             dispatch(addUser(user.data));
-            return navigate("/");
+            return navigate("/feed");
         } catch (error) {
           toast.error("Invalid Credentials!!");
         }

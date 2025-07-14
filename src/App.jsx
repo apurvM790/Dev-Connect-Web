@@ -10,6 +10,8 @@ import Profile from "./components/profile";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Signup from "./components/Signup";
+import Home  from "./components/Home";
+import Chat from "./components/Chat";
 
 
 
@@ -21,18 +23,20 @@ function App() {
       <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Body />}>
-            <Route path="/" element={<Feed />}></Route>
+            <Route index element={<Home />}></Route>
+            <Route path="/feed" element={<Feed />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/connections" element={<Connections />}></Route>
             <Route path="/requests" element={<Requests />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/chat" element={<Chat />}></Route>
             </Route>
           </Routes>
       </BrowserRouter>
       </Provider>
     </>
   )
-}
+};
 
 export default App

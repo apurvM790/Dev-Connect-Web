@@ -1,36 +1,96 @@
+import { useState } from "react";
+import { FaHeart, FaRegHeart, FaTimes } from "react-icons/fa";
+import { SlUserFemale } from "react-icons/sl";
+import { GrUserManager } from "react-icons/gr";
+import { removeUserFromFeed } from "../utils/feedSlice";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
 
+function Cards({ user }) {
+  if (!user) return null;
 
-function Cards({ user }){
-    const  { firstName, lastName, about, age, gender, skills} = user;
-    return <>   
-        <div className="card bg-base-300 w-2/6 h-[500px] py-2 shadow-2xl">
-  <figure className="">
-    <img
-      src={user.photoUrl}
-      alt="user" />
-  </figure>
-  <div className="card-body">
-    <h2 className="card-title">{firstName+" "+lastName}</h2>
-    <p>{about}</p>
-    {<div className="flex justify-between">
-        {age && <p>{"Age: "+age}</p>}
-        {gender && <p>{"Gender: "+gender}</p>}
-    </div>}
-    <div className="card-actions flex justify-between">
-    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-            Interested
-        </span>
-    </button>
-    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-            Ignore
-        </span>
-    </button>
+  const { _id, firstName, lastName, about, age, gender, photoUrl, skills } = user;
+    const dispatch = useDispatch();
+
+  const handleSendRequest = async (status, userId)=>{
+    try {
+
+        const response = await axios.post(BASE_URL+"/request/send/"+status+"/"+userId,
+            {},{withCredentials:true});
+        console.log(response);
+        dispatch(removeUserFromFeed(userId));
+
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+  return (
+    <div className="flex w-full items-start justify-center min-h-screen pt-10 md:pt-20  px-4">
+      <div className="w-full sm:w-[90%] md:w-[420px] lg:w-[450px] rounded-2xl shadow-2xl border border-gray-800 overflow-hidden ">
+        <img
+          src={photoUrl}
+          alt="user"
+          className="w-full  h-60 md:h-72 object-cover transition-transform duration-500 hover:scale-105"
+        />
+
+        <div className="p-5 text-white">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-wide uppercase">
+            {firstName + " " + lastName}
+          </h2>
+
+          <p className="text-gray-400 text-base md:text-lg mt-2 italic line-clamp-3">
+            {about}
+          </p>
+
+          <div className="flex justify-between text-sm md:text-base font-medium text-gray-300 mt-4">
+            {age && (
+              <p>
+                <span className="text-gray-400 font-semibold mr-1">🎂 Age:</span>
+                {age}
+              </p>
+            )}
+            {gender && (
+              <p className="flex items-center gap-2">
+                <span className="text-gray-400 font-semibold">Gender:</span>
+                {gender === "Male" ? (
+                  <GrUserManager className="text-blue-400" /> 
+                ) : (
+                  <SlUserFemale className="text-pink-400" />
+                )}
+              </p>
+            )}
+          </div>
+
+          {skills?.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {skills.map((skill, i) => (
+                <span
+                  key={i}
+                  className="text-xs px-3 py-1 bg-gray-700 text-white rounded-full"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="mt-6 flex justify-around">
+            <button
+              onClick={()=>handleSendRequest("interested",_id)}
+              className="text-4xl transition-all  duration-300 transform hover:scale-110"
+            ><FaHeart className="text-pink-500 transition   duration-300 scale-110" />
+            </button>
+
+            <button onClick={()=>handleSendRequest("ignored",_id)} className="text-4xl text-gray-400 hover:text-red-500 transition-transform transform hover:scale-110">
+              <FaTimes />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-    </>
+  );
 }
 
 export default Cards;

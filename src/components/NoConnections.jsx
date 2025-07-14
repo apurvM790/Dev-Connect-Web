@@ -5,7 +5,7 @@ function NoConnections (){
 
     const navigate = useNavigate();
     const handleClick=()=>{
-        navigate("/");
+        navigate("/feed");
     }
 
     return <>

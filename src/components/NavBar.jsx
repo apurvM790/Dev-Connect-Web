@@ -4,8 +4,9 @@ import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { removeFeed } from "../utils/feedSlice";
 import { Link } from 'react-router';
+import { DiCode } from "react-icons/di";
+import { LuMessageCircleHeart } from "react-icons/lu";
 
 function NavBar(){
   const user = useSelector((store)=> store.user);
@@ -17,7 +18,7 @@ function NavBar(){
           await axios.post(BASE_URL+"/logout",{},{withCredentials: true});
 
         dispatch(removeUser());
-        dispatch(removeFeed());
+        // dispatch(removeFeed());
         navigate("/login");
         
       } catch (error) {
@@ -25,16 +26,23 @@ function NavBar(){
       }
     }
 
+    const handleClick = ()=>{
+      navigate("/feed");
+    }
+
     return <>
-    <div className="navbar bg-base-300 px-6">
-  <div className="flex-1">
-    <a className="btn btn-ghost text-3xl font-bold bg-gradient-to-r from-orange-500 via-purple-300 to-cyan-300 bg-clip-text text-transparent [text-shadow:0_0_40px_rgba(255,0,255,0.7),0_0_30px_rgba(255,0,255,0.5)] ">𝕯𝖊𝖛-𝕮𝖔𝖓𝖓𝖊𝖈𝖙</a>
-  </div>
-  {user && <div className="flex-none gap-2">
-    {/* <div className="form-control">
-      <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
-    </div> */}
-    <div className="dropdown dropdown-end">
+    <div className="navbar bg-base-300 px-6 flex justify-between">
+  <div onClick={handleClick} className="flex items-center justify-center gap-1 cursor-pointer">
+  <span className="text-5xl animate-pulse text-indigo-600 drop-shadow-[0_0_20px_rgba(99,102,241,0.6)]">
+    <DiCode />
+  </span>
+
+  <span className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 bg-clip-text text-transparent animate-slide-in">
+    TechMate
+  </span>
+</div>
+  {user && <div className="flex-none gap-2 justify-center items-center">
+    <div className="dropdown dropdown-end transition-all hover:scale-105">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
@@ -59,7 +67,7 @@ function NavBar(){
         <li><a onClick={handleLogOut}>Logout</a></li>
       </ul>
     </div>
-    <Link to="/requests" className="btn btn-ghost btn-circle" >
+    <Link to="/requests" className="btn btn-ghost btn-circle transition-all hover:scale-105" >
       <div className="indicator">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +84,7 @@ function NavBar(){
         <span className="badge badge-xs badge-primary indicator-item"></span>
       </div>
     </Link>
+    <Link to="/chat" className="text-4xl font-semibold transition-all hover:scale-105 text-blue-500 rounded-full p-1"><LuMessageCircleHeart /></Link>
   </div>}
         </div>
     </>

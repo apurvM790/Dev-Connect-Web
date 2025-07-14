@@ -5,7 +5,6 @@ function FreindsCard({ data, handleShowCard }){
         handleShowCard();
     }
 
-    // console.log(data);
     return <>
         <div className="flex my-6 rounded-lg shadow-2xl justify-center flex-col items-center bg-gradient-to-br from-orange-200 via-sky-300 to-fuchsia-300 w-1/2 py-5 mx-auto" onClick={handleClick}>
             <div className="flex justify-center items-center w-40 h-40 rounded-full shadow-2xl border-2 border-fuchsia-300 hover:border-blue-400">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import FreindsCard from "./FreindsCard";
 
 function ConnectionsCard({connection}){
-    // console.log(connection);
+    
     const [toggle, setToggle] = useState(false);
     const handleClick = ()=>{
         setToggle(!toggle);
