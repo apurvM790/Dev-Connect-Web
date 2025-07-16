@@ -32,5 +32,9 @@ export default {
     },
   },
   plugins: [ require('daisyui')],
+
+  daisyui: {
+    themes: ["light", "dark", "cupcake", "bumblebee", "synthwave", "retro", "valentine", "halloween", "forest", "fantasy", "aqua", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"], // You can pick or limit themes
+  }
   
 }

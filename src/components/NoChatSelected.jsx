@@ -3,8 +3,8 @@ import { TbMessageChatbotFilled } from "react-icons/tb";
 const NoChatSelected = ()=>{
 
     return (
-        <div className="w-full flex justify-center items-center border-1 border-green-400 p-10">
-            <div className="max-w-md text-center">
+        <div className="flex h-full justify-center items-center p-6">
+            <div className="text-center">
                 <div className="flex justify-center gap-4">
                     <div className="md:text-4xl sm:2xl flex items-center animate-bounce">
                         <TbMessageChatbotFilled />

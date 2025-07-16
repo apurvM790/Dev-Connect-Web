@@ -2,13 +2,20 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "./constants";
 
-const fetchUser = createAsyncThunk("chat/fetchUser",async ()=>{
+export const fetchUser = createAsyncThunk("chat/fetchUser",async ()=>{
     const response = await axios.get(BASE_URL+"/message/user",{withCredentials:true});
     return response.data;
 });
 
-const fetchMessage = createAsyncThunk("chat/fetchMessage", async (userId)=>{
+export const fetchMessage = createAsyncThunk("chat/fetchMessage", async (userId)=>{
     const response = await axios.get(BASE_URL+`/message/${userId}`,{withCredentials:true});
+    return response.data;
+});
+
+export const sendMessage = createAsyncThunk("chat/sendMessage", async (messageData, thunkAPI)=>{
+    const state = thunkAPI.getState();
+    const selectedUser = state.chat?.selectedUser?._id;
+    const response = await axios.post(BASE_URL+`/message/send/${selectedUser}`, messageData, {withCredentials:true});
     return response.data;
 });
 
@@ -17,7 +24,8 @@ const initialState = {
     messages: [],
     selectedUser: null,
     isUserLoading: false,
-    isMessageLoading: false,   
+    isMessageLoading: false,
+    isMessageSending: false,   
 }
 
 const chatSlice = createSlice({
@@ -34,8 +42,10 @@ const chatSlice = createSlice({
             state.isMessageLoading = true;
         })  
         .addCase(fetchMessage.fulfilled,(state,action)=>{
+            
             state.isMessageLoading=false;
-            state.messages=action.payload;
+            const messages = action.payload?.data;
+            state.messages=[...state.messages,messages];
         })
         .addCase(fetchMessage.rejected,(state)=>{
             state.isMessageLoading=false;
@@ -50,6 +60,17 @@ const chatSlice = createSlice({
         })
         .addCase(fetchUser.rejected,(state)=>{
             state.isUserLoading=false;
+        })
+        .addCase(sendMessage.pending, (state)=>{
+            state.isMessageSending = true;
+        })
+        .addCase(sendMessage.fulfilled, (state,action)=>{
+            state.isMessageSending = false;
+            const message = action.payload?.data;
+            state.messages = [...state.messages,message];
+        })
+        .addCase(sendMessage.rejected, (state)=>{
+            state.isMessageSending = false;
         })
     }   
 });
