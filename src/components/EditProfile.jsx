@@ -83,7 +83,6 @@ function EditProfile({ user }){
             toast.loading("Uploading image...");
 
     const res = await axios.post("https://api.cloudinary.com/v1_1/dqznilxlc/image/upload",formdata);
-    console.log(res);
     setPhotoUrl(res.data.secure_url); 
     toast.dismiss();
     toast.success("Image uploaded successfully!");

@@ -1,1 +1,1 @@
-export const BASE_URL = window.location.host==="localhost" ? "http://localhost:3000" : "https://techmatebackend.onrender.com";
+export const BASE_URL = window.location.hostname==="localhost" ? "http://localhost:3000" : "https://techmatebackend.onrender.com";

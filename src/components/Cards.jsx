@@ -18,7 +18,6 @@ function Cards({ user }) {
 
         const response = await axios.post(BASE_URL+"/request/send/"+status+"/"+userId,
             {},{withCredentials:true});
-        console.log(response);
         dispatch(removeUserFromFeed(userId));
 
     } catch (error) {

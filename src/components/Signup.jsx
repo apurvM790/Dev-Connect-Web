@@ -26,8 +26,6 @@ function Signup(){
     const handleClick = async ()=>{
         try {
 
-          console.log(firstName,lastName,age,gender,email,password);
-
             if(password !== confirmPassword){
                 toast.error("Password not matched");
             }
@@ -40,13 +38,11 @@ function Signup(){
               password: password
           },{withCredentials: true});
 
-          console.log(user);
           toast.success("Profile created successfully!");
 
           return navigate("/login");
             
         } catch (error) {
-          console.log(error?.response?.data?.message);
             toast.error(error?.response?.data?.message);
         }
     }
