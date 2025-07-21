@@ -5,6 +5,7 @@ import { GrGallery } from "react-icons/gr";
 import { TiLocationArrow } from "react-icons/ti";
 import { sendMessage } from "../utils/chatSlice";
 import { useDispatch } from "react-redux";
+import socket from "../utils/socket";
 
 const MessageInput = ()=>{
 

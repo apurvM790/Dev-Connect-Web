@@ -5,6 +5,7 @@ import { removeUser } from "../utils/userSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { DiCode } from "react-icons/di";
 import { LuMessagesSquare } from "react-icons/lu";
+import { setSelectedUser } from "../utils/chatSlice";
 
 function NavBar() {
   const user = useSelector((store) => store.user);
@@ -15,6 +16,7 @@ function NavBar() {
     try {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
       dispatch(removeUser());
+      dispatch(setSelectedUser(null));
       navigate("/login");
     } catch (error) {
       console.log(error);
@@ -22,7 +24,8 @@ function NavBar() {
   };
 
   const handleClick = () => {
-    navigate("/feed");
+    if(user){
+    navigate("/feed");}
   };
 
   return (

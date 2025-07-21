@@ -39,11 +39,11 @@ function Home() {
           </p>
 
           <h1 className="text-lg sm:text-xl md:text-2xl font-semibold leading-tight mt-6 mb-4 bg-gradient-to-r from-slate-800 via-indigo-700 to-indigo-400 bg-clip-text text-transparent">
-            Meet Developers Who Match Your Mindset.
+            Meet <span className="bg-gradient-to-r from-orange-400 via-purple-400 via-teal-300 to-pink-400 bg-clip-text ">Developers</span> Who Match Your Mindset.
           </h1>
 
-          <h1 className="text-base sm:text-lg md:text-xl italic font-medium leading-tight mb-4 text-slate-700">
-            Tech isn’t solo anymore — meet your match
+          <h1 className="text-base sm:text-lg md:text-xl italic font-medium leading-tight mb-4 bg-gradient-to-r from-slate-700 via-gray-600 to-slate-800 text-transparent bg-clip-text">
+            Tech isn’t solo anymore — <span className="bg-gradient-to-r from-orange-400 via-purple-400 via-teal-300 to-pink-400 bg-clip-text">meet</span> your <span className="bg-gradient-to-r from-orange-400 via-purple-400 via-teal-300 to-pink-400 bg-clip-text">match</span>
           </h1>
           <div className="flex gap-4">
             <button onClick={handleClick} className="flex text-xl p-2 px-3 mt-2 sm:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg transition duration-300">
@@ -74,7 +74,7 @@ function Home() {
       </div>
 
       <div className="flex flex-col mt-20 justify-center items-center px-4 text-center">
-        <h1 className="text-4xl sm:text-5xl my-2 italic font-bold text-indigo-700">Why TechMate?</h1>
+        <h1 className="text-4xl sm:text-5xl my-2 italic font-bold bg-gradient-to-r from-indigo-700 via-blue-700 to-cyan-800 bg-clip-text text-transparent">Why <span className="bg-gradient-to-br px-1 from-orange-500 via-purple-400 via-rose-300 to-fuchsia-700 bg-clip-text">TechMate?</span></h1>
         <p className="text-base sm:text-lg md:text-xl font-medium text-zinc-600 max-w-3xl">
           Find your perfect match in the tech world. Whether you're looking for a coding partner, mentor, or just expanding your network.
         </p>

@@ -16,7 +16,7 @@ export const sendMessage = createAsyncThunk("chat/sendMessage", async (messageDa
     const state = thunkAPI.getState();
     const selectedUser = state.chat?.selectedUser?._id;
     const response = await axios.post(BASE_URL+`/message/send/${selectedUser}`, messageData, {withCredentials:true});
-    return response.data;
+    return response?.data?.data;
 });
 
 const initialState = {
@@ -34,7 +34,10 @@ const chatSlice = createSlice({
     reducers: {
         setSelectedUser : (state,action)=>{
             state.selectedUser=action.payload;
-        }
+        },
+        addMessage : (state, action) =>{
+            state.messages.push(action.payload);
+        },
     },
     extraReducers:(builder)=>{
         builder.
@@ -45,7 +48,7 @@ const chatSlice = createSlice({
             
             state.isMessageLoading=false;
             const messages = action.payload?.data;
-            state.messages=[...state.messages,messages];
+            state.messages=messages;
         })
         .addCase(fetchMessage.rejected,(state)=>{
             state.isMessageLoading=false;
@@ -66,8 +69,8 @@ const chatSlice = createSlice({
         })
         .addCase(sendMessage.fulfilled, (state,action)=>{
             state.isMessageSending = false;
-            const message = action.payload?.data;
-            state.messages = [...state.messages,message];
+            // const message = action.payload;
+            // state.messages = [...state.messages,message];
         })
         .addCase(sendMessage.rejected, (state)=>{
             state.isMessageSending = false;
@@ -75,5 +78,5 @@ const chatSlice = createSlice({
     }   
 });
 
-export const { setSelectedUser } = chatSlice.actions;
+export const { setSelectedUser, addMessage } = chatSlice.actions;
 export default chatSlice.reducer;
