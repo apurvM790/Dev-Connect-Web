@@ -1,4 +1,3 @@
-import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -6,7 +5,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 
 import Body from "./components/Body";
-import Profile from "./components/profile";
+import Profile from "./components/Profile";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Signup from "./components/Signup";
